@@ -1,8 +1,16 @@
 #!/bin/bash
-# Install script for FFMPEG
-# Installs all dependencies first, then builds FFMPEG for macOS from GitHub source
-# Requires Apple Developer Tools which includes Audiotoolbox and Videotoolbox development libraries
+# A full featured ffmpeg build and install script
+#
+# 1) First, the script installs Apple Developer Command Line Tools if it is not already installed
+# 2) Next, the script installs Homebrew if it is not already installed, then it proceeds to install all dependencies.
+# 3) Last, the script will build ffmpeg for macOS from GitHub source
+# This script is designed for a Core i7 CPU with the AVX2 instruction set
+ 
+sudo xcode-select --install &> /dev/null
 
+if [ ! -x `which brew` ]; then
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 brew install bzip2
 if [ ${?} -gt 0 ]; then
     brew upgrade bzip2
